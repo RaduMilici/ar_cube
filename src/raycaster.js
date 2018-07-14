@@ -15,15 +15,18 @@ export default class Raycaster {
   }
 
   addEvent() {
-    window.addEventListener('mousedown', event => {
-      const intersects = this.cast(event);
-      intersects.forEach(hitData => hitData.object.parent.onClick(hitData));
-    }, false);
+    window.addEventListener('mousedown', this.onClick.bind(this), false);
+    window.addEventListener('touchstart', this.onClick.bind(this), false);
+  }
+
+  onClick(event) {
+    const intersects = this.cast(event);
+    intersects.forEach(hitData => hitData.object.parent.onClick(hitData));
   }
 
   cast(event) {
-    const x = (event.clientX / window.innerWidth) * 2 - 1;
-    const y = -(event.clientY / window.innerHeight) * 2 + 1;
+    const x = (event.clientX / this.container.offsetWidth) * 2 - 1;
+    const y = -(event.clientY / this.container.offsetHeight) * 2 + 1;
     const mouse = new Vector2(x, y);
 
     this.raycaster.setFromCamera(mouse, this.camera);

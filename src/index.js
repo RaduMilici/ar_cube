@@ -3,7 +3,13 @@ import Cube from './prefabs/cube';
 import App from './app';
 import Raycaster from './raycaster';
 
-const { camera, renderer, scene, container } = new App();
+const appSettings = {
+  selector: '#webgl',
+  width: window.innerWidth,
+  height: window.innerHeight
+};
+
+const { camera, renderer, scene, container } = new App(appSettings);
 const raycaster = new Raycaster({ container, camera });
 
 const updater = new Updater({ renderer, scene, camera });

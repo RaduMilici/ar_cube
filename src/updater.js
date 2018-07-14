@@ -20,6 +20,7 @@ export default class Updater {
   }
 
   add(prefab) {
+    prefab.updater = this;
     this.updates.push(...prefab.components);
   }
 
@@ -31,8 +32,30 @@ export default class Updater {
     }
   }
 
+  toggle(behaviour) {
+    if (behaviour.__type === 'prefab') {
+      behaviour.components.forEach(this.toggleComponent.bind(this));
+    } else if (behaviour.__type === 'component') {
+      this.toggleComponent(behaviour);
+    }
+  }
+
+  toggleComponent(component) {
+    const index = this.findIndex(component);
+
+    if (index === -1) {
+      this.add({ components: [component] });
+    } else {
+      this.remove(component);
+    }
+  }
+
+  findIndex(behaviour) {
+    return this.updates.findIndex(({ __id }) => behaviour.__id === __id);
+  }
+
   removeComponent(component) {
-    const index = this.updates.findIndex(({ __id }) => component.__id === __id);
+    const index = this.findIndex(component);
 
     if (index !== -1) {
       this.updates.splice(index, 1);
