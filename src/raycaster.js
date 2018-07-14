@@ -2,11 +2,23 @@ import { Raycaster as ThreeRaycaster, Vector2 } from 'three';
 
 export default class Raycaster {
 
-  constructor({ container, camera, scene }) {
+  constructor({ container, camera }) {
     this.container = container;
     this.camera = camera;
-    this.scene = scene;
     this.raycaster = new ThreeRaycaster();
+    this.objects = [];
+    this.addEvent();
+  }
+
+  add(prefab) {
+    this.objects.push(prefab);
+  }
+
+  addEvent() {
+    window.addEventListener('mousedown', event => {
+      const intersects = this.cast(event);
+      intersects.forEach(hitData => hitData.object.parent.onClick(hitData));
+    }, false);
   }
 
   cast(event) {
@@ -15,7 +27,7 @@ export default class Raycaster {
     const mouse = new Vector2(x, y);
 
     this.raycaster.setFromCamera(mouse, this.camera);
-    return this.raycaster.intersectObjects(this.scene.children);
+    return this.raycaster.intersectObjects(this.objects, true);
   }
 
 }

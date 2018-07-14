@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial } from 'three';
+import { BoxGeometry, Mesh, MeshBasicMaterial, Color } from 'three';
 import Prefab from './prefab';
 import Rotate from '../components/rotate';
 
@@ -13,7 +13,11 @@ export default class Cube extends Prefab {
 
     const geometry = new BoxGeometry(1, 1, 1);
     const material = new MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new Mesh(geometry, material);
-    this.add(cube);
+    this.cube = new Mesh(geometry, material);
+    this.add(this.cube);
+  }
+
+  onClick(hitData) {
+    this.cube.material.color = new Color(Math.random() * 0xffffff);
   }
 }

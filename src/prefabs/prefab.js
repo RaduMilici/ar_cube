@@ -9,5 +9,6 @@ export default class Prefab extends Object3D {
     this.__id = uniqueID();
     this.components = [];
   }
-  
+
+  onClick() {}
 }
