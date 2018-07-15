@@ -7,7 +7,11 @@ export default class Raycaster {
     this.camera = camera;
     this.raycaster = new ThreeRaycaster();
     this.objects = [];
-    //this.addEvents();
+    this.containerSize = {
+      width: this.container.offsetWidth,
+      height: this.container.offsetHeight
+    }
+    this.addEvents();
   }
 
   addEvents() {
@@ -15,8 +19,8 @@ export default class Raycaster {
     window.addEventListener('touchstart', this.onClick.bind(this), false);
   }
 
-  onClick(event) {
-    const intersects = this.cast(event);
+  onClick(event, containerSize = this.containerSize) {
+    const intersects = this.cast(event, containerSize);
     intersects.forEach(hitData => hitData.object.parent.onClick(hitData));
   }
 
@@ -24,11 +28,10 @@ export default class Raycaster {
     this.objects.push(prefab);
   }
 
-  cast(event) {
-    const x = (event.clientX / this.container.offsetWidth) * 2 - 1;
-    const y = -(event.clientY / this.container.offsetHeight) * 2 + 1;
+  cast(event, { width, height }) {
+    const x = (event.clientX / width) * 2 - 1;
+    const y = -(event.clientY / height) * 2 + 1;
     const mouse = new Vector2(x, y);
-    console.log(event.clientX, event.clientY)
 
     this.raycaster.setFromCamera(mouse, this.camera);
     return this.raycaster.intersectObjects(this.objects, true);
