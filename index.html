@@ -10,9 +10,9 @@
   <script src='bundle.js'></script>
   <script>
     const test = () => {
-      cube.onClick.bind(cube);
+      cube.onClick.bind(cube)();
       cube.position.x += 0.5;
-      return cube;
+      return 'bogdanel';
     };
   </script>
 </body>
