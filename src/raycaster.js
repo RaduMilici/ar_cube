@@ -7,7 +7,7 @@ export default class Raycaster {
     this.camera = camera;
     this.raycaster = new ThreeRaycaster();
     this.objects = [];
-    this.addEvents();
+    //this.addEvents();
   }
 
   addEvents() {
