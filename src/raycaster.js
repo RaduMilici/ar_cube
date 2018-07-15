@@ -7,14 +7,10 @@ export default class Raycaster {
     this.camera = camera;
     this.raycaster = new ThreeRaycaster();
     this.objects = [];
-    this.addEvent();
+    this.addEvents();
   }
 
-  add(prefab) {
-    this.objects.push(prefab);
-  }
-
-  addEvent() {
+  addEvents() {
     window.addEventListener('mousedown', this.onClick.bind(this), false);
     window.addEventListener('touchstart', this.onClick.bind(this), false);
   }
@@ -22,6 +18,10 @@ export default class Raycaster {
   onClick(event) {
     const intersects = this.cast(event);
     intersects.forEach(hitData => hitData.object.parent.onClick(hitData));
+  }
+
+  add(prefab) {
+    this.objects.push(prefab);
   }
 
   cast(event) {

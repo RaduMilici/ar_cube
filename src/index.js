@@ -23,3 +23,5 @@ updater.add(cube);
 raycaster.add(cube);
 
 updater.start();
+
+window.test = cube.onClick.bind(cube);
