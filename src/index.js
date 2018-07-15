@@ -24,8 +24,4 @@ raycaster.add(cube);
 
 updater.start();
 
-window.test = () => {
-  cube.onClick.bind(cube);
-  cube.position.x += 0.5;
-  return cube;
-};
+window.cube = cube;
