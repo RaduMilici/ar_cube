@@ -28,6 +28,7 @@ export default class Raycaster {
     const x = (event.clientX / this.container.offsetWidth) * 2 - 1;
     const y = -(event.clientY / this.container.offsetHeight) * 2 + 1;
     const mouse = new Vector2(x, y);
+    console.log(event.clientX, event.clientY)
 
     this.raycaster.setFromCamera(mouse, this.camera);
     return this.raycaster.intersectObjects(this.objects, true);
