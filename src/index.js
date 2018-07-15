@@ -24,4 +24,4 @@ raycaster.add(cube);
 
 updater.start();
 
-window.cube = cube;
+window.raycaster = raycaster;

@@ -9,11 +9,11 @@
   <div id='webgl'></div>
   <script src='bundle.js'></script>
   <script>
-    const test = (x) => {
-      cube.onClick.bind(cube)();
-      cube.position.x += x;
+    const onClick = (clientX, clientY) => {
+      raycaster.onClick({ clientX, clientY });
       return 'bogdanel';
     };
+    //422 393
   </script>
 </body>
 </html>
