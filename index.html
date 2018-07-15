@@ -9,9 +9,9 @@
   <div id='webgl'></div>
   <script src='bundle.js'></script>
   <script>
-    const test = () => {
+    const test = (x) => {
       cube.onClick.bind(cube)();
-      cube.position.x += 0.5;
+      cube.position.x += x;
       return 'bogdanel';
     };
   </script>
