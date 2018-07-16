@@ -28,16 +28,6 @@ export default class Cube extends Prefab {
     });
   }
 
-  getMaterialIndex({ faceIndex, object }) {
-    const groups = object.geometry.groups;
-
-    const { materialIndex } = groups.find(({ start, count }) => {
-      return faceIndex >= start && faceIndex <= start + count;
-    });
-
-    console.log(materialIndex);
-  }
-
   onClick(hitData) {
     const { materialIndex } = hitData.face;
     const { name } = hitData.object.material[materialIndex];
