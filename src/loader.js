@@ -1,3 +1,11 @@
-import cubeMesh from './mesh/info_cube.dae';
+import { ColladaLoader } from 'three-full';
 
-console.log(cubeMesh);
+export default class Loader {
+  constructor() {
+    this.loader = new ColladaLoader();
+  }
+
+  load(path, callback) {
+    this.loader.load(path, callback);
+  }
+}

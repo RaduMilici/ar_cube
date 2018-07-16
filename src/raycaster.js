@@ -20,8 +20,11 @@ export default class Raycaster {
   }
 
   onClick(event, containerSize = this.containerSize) {
-    const intersects = this.cast(event, containerSize);
-    intersects.forEach(hitData => hitData.object.parent.onClick(hitData));
+    const firstHit = this.cast(event, containerSize)[0];
+    if (firstHit) {
+      return firstHit.object.parent.onClick(firstHit);
+    }
+    // intersects.forEach(hitData => hitData.object.parent.onClick(hitData));
   }
 
   add(prefab) {
