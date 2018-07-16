@@ -2,6 +2,7 @@ import Updater from './updater';
 import Cube from './prefabs/cube';
 import App from './app';
 import Raycaster from './raycaster';
+import './loader';
 
 const appSettings = {
   selector: '#webgl',
