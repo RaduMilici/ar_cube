@@ -18,11 +18,11 @@ const cube = new Cube();
 camera.position.set(0, 0, 5);
 renderer.setClearColor(0x000000, 1);
 
-const light = new AmbientLight( 0x404040 );
-scene.add(light);
+scene.add(new AmbientLight(0xffffff));
 scene.add(cube);
 updater.add(cube);
 raycaster.add(cube);
 updater.start();
 
+window.cube = cube;
 window.raycaster = raycaster;

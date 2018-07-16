@@ -1,4 +1,4 @@
-import { Color, Matrix4, Geometry, Mesh } from 'three';
+import { Color, Matrix4, Geometry, Mesh, Texture } from 'three';
 import Prefab from './prefab';
 import Rotate from '../components/rotate';
 import Loader from '../loader';
@@ -27,13 +27,44 @@ export default class Cube extends Prefab {
   }
 
   onLoad({ scene }) {
-    scene.children.forEach(({ geometry, material }) => {
-      // meshes are exported with a faulty rotation, make sure to rotate them here
-      geometry.applyMatrix(this.rotationMatrix);
-      // convert to normal geometry. buffer geometry has broken face material index
-      const convertedGeometry = new Geometry().fromBufferGeometry(geometry);
-      this.add(new Mesh(convertedGeometry, material));
-    });
+    this.cubeMesh = scene.children[0];
+
+    if (!this.cubeMesh) {
+      console.error('mesh not found in loaded file');
+      return;
+    }
+
+    const { geometry, material } = this.cubeMesh;
+    // meshes are exported with a faulty rotation, make sure to rotate them here
+    geometry.applyMatrix(this.rotationMatrix);
+    // convert to normal geometry. buffer geometry has broken face material index
+    const convertedGeometry = new Geometry().fromBufferGeometry(geometry);
+    this.add(new Mesh(convertedGeometry, material));
+  }
+
+  setTexture(materialIndex, dataURL) {
+    if (!this.cubeMesh) {
+      console.error('cube mesh not loaded');
+      return;
+    }
+
+    const image = new Image();
+    image.src = dataURL;
+    const texture = new Texture();
+    texture.image = image;
+
+    image.onload = () => {
+      texture.needsUpdate = true;
+      const material = this.cubeMesh.material[materialIndex];
+
+      if (!material) {
+        console.error(`invalid materialIndex: ${materialIndex}`);
+        return;
+      }
+
+      material.map = texture;
+      material.needsUpdate = true;
+    };
   }
 
   onClick(hitData) {
