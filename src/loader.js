@@ -8,4 +8,9 @@ export default class Loader {
   load(path, callback) {
     this.loader.load(path, callback);
   }
+
+  parse(data, callback) {
+    const parsed = this.loader.parse(data);
+    callback(parsed);
+  }
 }
