@@ -1,7 +1,6 @@
 import { Raycaster as ThreeRaycaster, Vector2 } from 'three';
 
 export default class Raycaster {
-
   constructor({ container, camera }) {
     this.container = container;
     this.camera = camera;
