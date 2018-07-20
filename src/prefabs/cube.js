@@ -10,7 +10,8 @@ export default class Cube extends Prefab {
     super();
     this.scale.set(0.1, 0.1, 0.1);
     this.loader = new Loader();
-    this.components = [new Rotate(this, { x: 0, y: -1, z: 0 })];
+    const rotate = new Rotate(this, { x: 0, y: -2, z: 0 });
+    this.components = [rotate];
     // Use this to correct rotation on X axis. Mesh would be turned sideways otherwise.
     this.rotationMatrix = new Matrix4().makeRotationX(-Math.PI / 2);
     // TODO: Turn this back on when we can make AJAX calls from swift. Use parse in the meantime.
@@ -30,7 +31,7 @@ export default class Cube extends Prefab {
     this.cubeMesh = scene.children[0];
 
     if (!this.cubeMesh) {
-      console.error('mesh not found in loaded file');
+      console.error('mesh not found');
       return;
     }
 
@@ -49,8 +50,9 @@ export default class Cube extends Prefab {
     }
 
     const image = new Image();
-    image.src = dataURL;
     const texture = new Texture();
+
+    image.src = dataURL;
     texture.image = image;
 
     image.onload = () => {
@@ -68,9 +70,15 @@ export default class Cube extends Prefab {
   }
 
   onClick(hitData) {
-    const { materialIndex } = hitData.face;
-    const { name } = hitData.object.material[materialIndex];
-    hitData.object.material[materialIndex].color = new Color(Math.random() * 0xffffff);
-    return { materialName: name, materialIndex };
+    const materialIndex = hitData.face.materialIndex;
+    const material = hitData.object.material[materialIndex];
+
+    if (!material) {
+      console.error(`invalid materialIndex: ${materialIndex}`);
+      return;
+    }
+
+    material.color = new Color(Math.random() * 0xffffff);
+    return { materialName: material.name, materialIndex };
   }
 }

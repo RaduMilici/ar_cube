@@ -9,7 +9,7 @@ export default class Raycaster {
     this.containerSize = {
       width: this.container.offsetWidth,
       height: this.container.offsetHeight
-    }
+    };
     this.addEvents();
   }
 

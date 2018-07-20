@@ -9,14 +9,12 @@
   <div id='webgl'></div>
   <script src='bundle.js'></script>
   <script>
-    // expose global functions here so they can be invoked from iOS / Android
+    // expose global functions so they can be invoked from iOS / Android
     const onClick = (clientX, clientY, width, height) => {
       return raycaster.onClick({ clientX, clientY }, { width, height });
     };
 
-    const setTexture = (index, dataURL) => {
-      cube.setTexture(index, dataURL);
-    };
+    const setTexture = (index, dataURL) => { cube.setTexture(index, dataURL); };
   </script>
 </body>
 </html>

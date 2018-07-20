@@ -16,7 +16,7 @@ const updater = new Updater({ renderer, scene, camera });
 const cube = new Cube();
 
 camera.position.set(0, 0, 5);
-renderer.setClearColor(0x000000, 1);
+renderer.setClearColor(0x000000, 0);
 
 scene.add(new AmbientLight(0xffffff));
 scene.add(cube);
@@ -24,5 +24,6 @@ updater.add(cube);
 raycaster.add(cube);
 updater.start();
 
+// expose global functions so they can be invoked from iOS / Android
 window.cube = cube;
 window.raycaster = raycaster;
