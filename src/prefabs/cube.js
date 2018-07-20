@@ -1,6 +1,7 @@
-import { Color, Matrix4, Geometry, Mesh, Texture } from 'three';
+import { Color, Matrix4, Geometry, Mesh } from 'three';
 import Prefab from './prefab';
 import Rotate from '../components/rotate';
+import TextureChanger from '../components/TextureChanger';
 import Loader from '../loader';
 import cubeMeshPath from '../mesh/info_cube.dae';
 import cubeMeshData from '../mesh/info_cube';
@@ -10,32 +11,25 @@ export default class Cube extends Prefab {
     super();
     this.scale.set(0.1, 0.1, 0.1);
     this.loader = new Loader();
-    const rotate = new Rotate(this, { x: 0, y: -2, z: 0 });
-    this.components = [rotate];
+    this.textureChanger = new TextureChanger(this);
+    this.rotate = new Rotate(this, { x: 0, y: -1, z: 0 });
+    this.components = [this.rotate];
     // Use this to correct rotation on X axis. Mesh would be turned sideways otherwise.
     this.rotationMatrix = new Matrix4().makeRotationX(-Math.PI / 2);
     // TODO: Turn this back on when we can make AJAX calls from swift. Use parse in the meantime.
-    //this.loadCubeMesh();
-    this.parseCubeMesh();
+    //this.loader.load(cubeMeshPath, this.onMeshLoad.bind(this));
+    this.loader.parse(cubeMeshData, this.onMeshLoad.bind(this));
   }
 
-  parseCubeMesh() {
-    this.loader.parse(cubeMeshData, this.onLoad.bind(this));
-  }
+  onMeshLoad({ scene }) {
+    const cubeMesh = scene.children[0];
 
-  loadCubeMesh() {
-    this.loader.load(cubeMeshPath, this.onLoad.bind(this));
-  }
-
-  onLoad({ scene }) {
-    this.cubeMesh = scene.children[0];
-
-    if (!this.cubeMesh) {
+    if (!cubeMesh) {
       console.error('mesh not found');
       return;
     }
 
-    const { geometry, material } = this.cubeMesh;
+    const { geometry, material } = cubeMesh;
     // meshes are exported with a faulty rotation, make sure to rotate them here
     geometry.applyMatrix(this.rotationMatrix);
     // convert to normal geometry. buffer geometry has broken face material index
@@ -43,30 +37,10 @@ export default class Cube extends Prefab {
     this.add(new Mesh(convertedGeometry, material));
   }
 
-  setTexture(materialIndex, dataURL) {
-    if (!this.cubeMesh) {
-      console.error('cube mesh not loaded');
-      return;
-    }
-
-    const image = new Image();
-    const texture = new Texture();
-
-    image.src = dataURL;
-    texture.image = image;
-
-    image.onload = () => {
-      texture.needsUpdate = true;
-      const material = this.cubeMesh.material[materialIndex];
-
-      if (!material) {
-        console.error(`invalid materialIndex: ${materialIndex}`);
-        return;
-      }
-
-      material.map = texture;
-      material.needsUpdate = true;
-    };
+  rotateManually(rads) {
+    this.updater.remove(this.rotate);
+    const newRotation = this.rotate.addTo({ x: 0, y: rads, z: 0 });
+    this.rotate.setRotation(newRotation);
   }
 
   onClick(hitData) {

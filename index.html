@@ -14,7 +14,7 @@
       return raycaster.onClick({ clientX, clientY }, { width, height });
     };
 
-    const setTexture = (index, dataURL) => { cube.setTexture(index, dataURL); };
+    const setTexture = (index, dataURL) => { cube.textureChanger.setFromDataUrl(index, dataURL); };
   </script>
 </body>
 </html>
