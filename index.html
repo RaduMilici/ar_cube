@@ -11,10 +11,21 @@
   <script>
     // expose global functions so they can be invoked from iOS / Android
     const onClick = (clientX, clientY, width, height) => {
+      // tapping on the cube toggles its rotation
+      updater.toggle(cube.rotate);
       return raycaster.onClick({ clientX, clientY }, { width, height });
     };
 
-    const setTexture = (index, dataURL) => { cube.textureChanger.setFromDataUrl(index, dataURL); };
+    const setTexture = (index, dataURL) => {
+      // can set a texture for a face in base64
+      cube.textureChanger.setFromDataUrl(index, dataURL);
+    };
+
+    const rotateInRadians = rads => {
+      // swiping on the screen rotates it in radians
+      updater.remove(cube.rotate);
+      cube.rotateManually(Number(rads));
+    };
   </script>
 </body>
 </html>

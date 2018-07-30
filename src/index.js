@@ -25,5 +25,6 @@ raycaster.add(cube);
 updater.start();
 
 // expose global functions so they can be invoked from iOS / Android
+window.updater = updater;
 window.cube = cube;
 window.raycaster = raycaster;

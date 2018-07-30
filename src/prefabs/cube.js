@@ -38,7 +38,6 @@ export default class Cube extends Prefab {
   }
 
   rotateManually(rads) {
-    this.updater.remove(this.rotate);
     const newRotation = this.rotate.addTo({ x: 0, y: rads, z: 0 });
     this.rotate.setRotation(newRotation);
   }
