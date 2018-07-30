@@ -52,7 +52,7 @@ export default class Cube extends Prefab {
       return;
     }
 
-    material.color = new Color(Math.random() * 0xffffff);
+    // material.color = new Color(Math.random() * 0xffffff);
     return { materialName: material.name, materialIndex };
   }
 }
