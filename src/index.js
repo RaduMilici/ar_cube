@@ -3,6 +3,7 @@ import Cube from './prefabs/cube';
 import App from './app';
 import Raycaster from './raycaster';
 import { AmbientLight } from 'three';
+import imageData from './mesh/texture64';
 
 const appSettings = {
   selector: '#webgl',
@@ -28,3 +29,6 @@ updater.start();
 window.updater = updater;
 window.cube = cube;
 window.raycaster = raycaster;
+window.testImage = () => {
+  for (let i = 1; i < 6; i++) cube.textureChanger.setFromDataUrl(i, imageData);
+};
