@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
   <meta charset='UTF-8'>
-  <title>Title</title>
+  <title>ar cube</title>
   <link rel='stylesheet' href='src/style.css'>
 </head>
 <body>
@@ -10,19 +10,20 @@
   <script src='bundle.js'></script>
   <script>
     // expose global functions so they can be invoked from iOS / Android
+
+    // tapping on the cube toggles its rotation
     const onClick = (clientX, clientY, width, height) => {
-      // tapping on the cube toggles its rotation
       updater.toggle(cube.rotate);
       return raycaster.onClick({ clientX, clientY }, { width, height });
     };
 
+    // can set a texture for a face in base64
     const setTexture = (index, dataURL) => {
-      // can set a texture for a face in base64
       cube.textureChanger.setFromDataUrl(index, dataURL);
     };
 
+    // swiping on the screen rotates it in radians
     const rotateInRadians = rads => {
-      // swiping on the screen rotates it in radians
       updater.remove(cube.rotate);
       cube.rotateManually(Number(rads));
     };

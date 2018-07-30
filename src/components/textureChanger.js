@@ -1,8 +1,8 @@
 import { Texture } from 'three';
 
 export default class TextureChanger {
-  constructor(prefab) {
-    this.prefab = prefab;
+  constructor(mesh) {
+    this.mesh = mesh;
   }
 
   setFromDataUrl(materialIndex, dataURL) {
@@ -14,7 +14,7 @@ export default class TextureChanger {
 
     image.onload = () => {
       texture.needsUpdate = true;
-      const material = this.prefab.cubeMesh.material[materialIndex];
+      const material = this.mesh.material[materialIndex];
 
       if (!material) {
         console.error(`invalid materialIndex: ${materialIndex}`);

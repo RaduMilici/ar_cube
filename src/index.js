@@ -3,6 +3,7 @@ import Cube from './prefabs/cube';
 import App from './app';
 import Raycaster from './raycaster';
 import { AmbientLight } from 'three';
+
 const appSettings = {
   selector: '#webgl',
   width: window.innerWidth,
@@ -11,7 +12,6 @@ const appSettings = {
 
 const { camera, renderer, scene, container } = new App(appSettings);
 const raycaster = new Raycaster({ container, camera });
-
 const updater = new Updater({ renderer, scene, camera });
 const cube = new Cube();
 

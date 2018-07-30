@@ -2,19 +2,18 @@ import Component from './component';
 
 export default class Rotate extends Component {
   constructor(prefab, { x, y, z }) {
-    super();
-    this.prefab = prefab;
+    super(prefab);
     this.x = x;
     this.y = y;
     this.z = z;
   }
 
-  addTo({ x, y, z }) {
-    return {
-      x: this.prefab.rotation.x + x,
-      y: this.prefab.rotation.y + y,
-      z: this.prefab.rotation.z + z
-    };
+  addToCurrent({ x, y, z }) {
+    const newX = this.prefab.rotation.x + x;
+    const newY = this.prefab.rotation.y + y;
+    const newZ = this.prefab.rotation.z + z;
+
+    return { x: newX, y: newY, z: newZ };
   }
 
   incrementPerFrame(delta) {
@@ -22,7 +21,7 @@ export default class Rotate extends Component {
     const y = this.y * delta;
     const z = this.z * delta;
 
-    return this.addTo({ x, y, z });
+    return this.addToCurrent({ x, y, z });
   }
 
   setRotation({ x, y, z }) {

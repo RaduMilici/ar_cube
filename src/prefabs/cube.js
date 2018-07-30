@@ -11,7 +11,6 @@ export default class Cube extends Prefab {
     super();
     this.scale.set(0.1, 0.1, 0.1);
     this.loader = new Loader();
-    this.textureChanger = new TextureChanger(this);
     this.rotate = new Rotate(this, { x: 0, y: -1, z: 0 });
     this.components = [this.rotate];
     // Use this to correct rotation on X axis. Mesh would be turned sideways otherwise.
@@ -34,7 +33,9 @@ export default class Cube extends Prefab {
     geometry.applyMatrix(this.rotationMatrix);
     // convert to normal geometry. buffer geometry has broken face material index
     const convertedGeometry = new Geometry().fromBufferGeometry(geometry);
-    this.add(new Mesh(convertedGeometry, material));
+    const mesh = new Mesh(convertedGeometry, material);
+    this.add(mesh);
+    this.textureChanger = new TextureChanger(mesh);
   }
 
   rotateManually(rads) {
